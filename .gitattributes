@@ -2,4 +2,4 @@
 
 * text=auto
 
-*.rb linguist-language=Python
+*.rb linguist-language=Java
