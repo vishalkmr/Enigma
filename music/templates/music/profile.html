@@ -1,0 +1,183 @@
+{% extends 'music/base.html' %}
+{% block style %}
+
+  <link href="../static/css/loaders.min.css" rel="stylesheet" />
+   <style>
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('../static/img/p.gif') 50% 50% no-repeat rgb(249,249,249);
+    opacity: .3;
+}
+
+    </style>
+    <script src="../static/js/jquery-2.2.4.min.js"></script>
+ <script type="text/javascript">
+$(window).load(function() {
+    $(".loader").fadeOut("slow");
+});
+
+    </script>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="loader">
+
+</div>
+
+
+
+
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6" style="">
+            <div class="panel panel-default">
+             <div class="panel-heading  " style="text-align: center"><h3>Hello <strong style="color:brown">{{ username }}</strong> Update Your Profile </h3></div>
+                <div class="panel-body">
+
+
+                    {% if status == 'created' %}
+                         <div style="text-align: center">
+
+                      <div class="alert alert-info fade in">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4 style="text-align: center ;font-family: Arial Rounded MT Bold;">Your Current Details.....</h4><hr>
+                            <strong> Gender </strong> : &nbsp;{{ gender }} &nbsp;  <br>
+                          <strong> City </strong> : &nbsp;{{ city }} &nbsp;  <br>
+                           <strong> Date of Birth</strong> : &nbsp;{{ date}} &nbsp;  <br>
+                      </div>
+                     </div>
+                    {% endif %}
+        <form class="well form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+           {% csrf_token %}
+
+        <div class="form-group ">
+            <label class="col-md-4 control-label" for="id_gender">Gender </label>
+         <div class="col-md-4 selectContainer">
+            <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <select  name="gender" id="id_gender" class="form-control selectpicker" >
+                {% if gender == 'Male' %}
+                    <option value="Male" selected>Male</option>
+                    <option value="Female" >Female</option>
+                {% else %}
+                <option value="Female" selected>Female</option>
+                    <option value="Male">Male</option>
+                {% endif %}
+            </select>
+            </div>
+         </div>
+        </div>
+        <div class="form-group has-feedback">
+        <label class="col-md-4 control-label" >City</label>
+        <div class="col-md-4 inputGroupContainer">
+        <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+        <input  class="form-control" placeholder="{{ city }} "  type="text" name="city" value="{{ city }}" maxlength="100" required id="id_city" data-required-error="Please enter your city"   />
+        </div>
+        </div>
+        <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+        <div class="help-block with-errors"></div>
+        </div>
+
+
+
+
+    <div class="form-group has-feedback">
+         <label class="col-md-4 control-label" for="id_city">Date of Birth </label>
+         <div class="col-md-4">
+                 <input  class="form-control" data-required-error="Please enter your date "   type="text" name="date_of_birth" value="" PLACEHOLDER="YYYY-MM-DD" required id="id_date_of_birth" />
+         <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+             <div class="help-block with-errors"></div>
+         </div>
+    </div>
+
+            <div class="form-group" style="text-align: center;margin-left: 38%">
+                 <div class="input-group">
+                    <button   type="submit" class="btn btn-success">Submit</button>
+
+                 </div>
+            </div>
+
+                    </form>
+                </div>
+                    <div class="panel-footer"></div>
+            </div>
+        </div>
+        {% if  username != "Testuser"  %}
+            <div class="col-sm-12 col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                      <h3 style="text-align: center">Why Profile is important?</h3>
+                    <p> Enigma is an music app that allows you to listen and download music . </p>
+                    <p> In order to provide <strong style="color: #256ed2">Personalized  Recommendations</strong> we need user specific details .</p>
+                    <p>Means using <strong  style="color: #32d243"> Updated Profile</strong>  it is easy for us to recommend music for you   Based on your .....</p>
+                    <p>
+
+                        <ul>
+                        <li>Listen History</li>
+                        <li>Location</li>
+                        <li>Age</li>
+                        <li>Gender</li>
+                        <li>And may more things </li>
+
+
+                    </ul>
+
+                    </p>
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+        {% else %}
+                  <div class="col-sm-12 col-md-5">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                 <h3 style="text-align: center;">Why Profile is important?</h3>
+                <p> Enigma is an music app that allows you to listen and download music . </p>
+                <p> In order to provide <strong style="color: #238bef">Personalized  Recommendations</strong> we need user specific details .</p>
+                 <p>Means using <strong style="color: #32d243"> Updated Profile</strong>  it is easy for us to recommend music for you   Based on your .....</p>
+                    <p>
+
+                        <ul>
+                        <li>Listen History</li>
+                        <li>Location</li>
+                        <li>Age</li>
+                        <li>Gender</li>
+                        <li>And may more things </li>
+
+
+                    </ul>
+
+                    </p>
+                <p> How ever you are login as a <strong style="color: #256ed2">Testuser</strong> which is a <strong style="color: #c9302c">Shared Account</strong> . </p>
+                <p> Anyone can change the porfile details at any time so you may not get best recomendations  .</p>
+                <p> For best recomendations we suggests you to <strong style="color: #23ff1c"> Create an Account</strong> .</p>
+
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+        {% endif %}
+
+    </div>
+</div>
+    
+{% endblock %}
+

@@ -1,0 +1,294 @@
+{% extends 'music/base.html' %}
+{% load staticfiles %}
+{% block style %}
+
+ <script src="../static/pace/js/pace.js"></script>
+  <link href="../static/pace/css/themes/blue/pace-theme-loading-bar.css" rel="stylesheet" />
+
+
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
+{% block body %}
+
+
+
+
+
+<div class="container-fluid songs-container">
+
+    <div class="alert  ">
+    <div class="container" style="margin-left: -1%;margin-top: -3%;">
+      <div class="page-header" style="margin: ;  border-bottom: 2px solid #0e46d2;">
+        <h3><small style="font-family: 'Georgia';font-size:larger;color: #0e46d2">Latest Albums </small></h3>
+      </div>
+        {% for album in latest_albums %}
+            <div class="col-sm-4 col-lg-2" onmouseover="style=''">
+            <div class="thumbnail" >
+                <a href="{%  url 'music:album_detail' album.id %}" data-toggle="tooltip" data-placement="top" title="{{   album.album_title   }}" data-original-title=""   style="text-align: center;text-decoration: none">
+                    <img   src="../{{ album.album_logo }}" style=""  class="">
+                <div class="caption">
+                    <h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h4>
+                    <h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.pub_year }}</h6>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+ <div class="hidden" id="hidden-latest" style="">
+         {% for album in more_latest_albums %}
+            <div class="col-sm-4 col-lg-2" onmouseover="style=''">
+            <div class="thumbnail" >
+                <a href="{%  url 'music:album_detail' album.id %}" data-toggle="tooltip" data-placement="top" title="{{   album.album_title   }}" data-original-title=""   style="text-align: center;text-decoration: none">
+                    <img   src="../{{ album.album_logo }}" style=""  class="">
+                <div class="caption">
+                    <h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h4>
+                    <h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.pub_year }}</h6>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
+        </div>
+   <button class="btn-primary btn" id="latest-btn"  onclick="latestalbums();" style="margin-left: 70%;margin-top: -1%;"> More</button>
+
+ <script>
+            var latestbtn=document.querySelector('#latest-btn');
+            var latesttarget=document.querySelector('#hidden-latest');
+            function latestalbums () {
+                    latestbtn.setAttribute('class','hidden');
+                    latesttarget.setAttribute('class','page-header');
+            }
+ </script>
+
+    </div>
+
+
+
+</div>
+
+{% if  popular_albums %}
+<div class="container-fluid songs-container">
+
+    <div class="alert  ">
+    <div class="container" style="margin-left: -1%;margin-top: -3%;">
+          <div class="page-header" style="margin: ;  border-bottom: 2px solid #ee8a00;">
+        <h3><small style="font-family: 'Georgia';font-size:larger;color: #ee9d0b">Popular Albums </small></h3>
+      </div>
+
+        {% for album in popular_albums   %}
+            <div class="col-sm-4 col-lg-2" onmouseover="style=''">
+            <div class="thumbnail" >
+                <a href="{%  url 'music:album_detail' album.id %}" data-toggle="tooltip" data-placement="top" title="{{   album.album_title   }}" data-original-title=""   style="text-align: center;text-decoration: none">
+                    <img   src="../{{ album.album_logo }}" style=""  class="">
+                <div class="caption">
+                    <h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h4>
+                    <h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.pub_year }}</h6>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% if  more_popular_albums %}
+ <div class="hidden" id="hidden-popular" style="">
+               {% for album in more_popular_albums   %}
+            <div class="col-sm-4 col-lg-2" onmouseover="style=''">
+            <div class="thumbnail" >
+                <a href="{%  url 'music:album_detail' album.id %}" data-toggle="tooltip" data-placement="top" title="{{   album.album_title   }}" data-original-title=""   style="text-align: center;text-decoration: none">
+                    <img   src="../{{ album.album_logo }}" style=""  class="">
+                <div class="caption">
+                    <h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h4>
+                    <h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.pub_year }}</h6>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
+        </div>
+   <button class="btn-warning btn" id="popular-btn"  onclick="popularalbums();" style="margin-left: 70%;margin-top: -1%;"> More</button>
+
+ <script>
+            var popularbtn=document.querySelector('#popular-btn');
+            var populartarget=document.querySelector('#hidden-popular');
+            function popularalbums () {
+
+                    popularbtn.setAttribute('class','hidden');
+                    populartarget.setAttribute('class','page-header');
+            }
+ </script>
+
+
+{% endif %}
+
+
+    </div>
+
+
+
+</div>
+{% endif %}
+
+
+{% if  cf_albums %}
+<div class="container-fluid songs-container">
+
+    <div class="alert  ">
+    <div class="container" style="margin-left: -1%;margin-top: -3%;">
+          <div class="page-header" style="margin: ;  border-bottom: 2px solid #238bef;">
+        <h3><small style="font-family: 'Georgia';font-size:larger;color: #238bef">Recommended Albums </small></h3>
+      </div>
+
+        {% for album in cf_albums   %}
+            <div class="col-sm-4 col-lg-2" onmouseover="style=''">
+            <div class="thumbnail" >
+                <a href="{%  url 'music:album_detail' album.id %}" data-toggle="tooltip" data-placement="top" title="{{   album.album_title   }}" data-original-title=""   style="text-align: center;text-decoration: none">
+                    <img   src="../{{ album.album_logo }}" style=""  class="">
+                <div class="caption">
+                    <h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h4>
+                    <h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.pub_year }}</h6>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+{% if more_cf_albums %}
+ <div class="hidden" id="hidden-cf" style="">
+               {% for album in more_cf_albums   %}
+            <div class="col-sm-4 col-lg-2" onmouseover="style=''">
+            <div class="thumbnail" >
+                <a href="{%  url 'music:album_detail' album.id %}" data-toggle="tooltip" data-placement="top" title="{{   album.album_title   }}" data-original-title=""   style="text-align: center;text-decoration: none">
+                    <img   src="../{{ album.album_logo }}" style=""  class="">
+                <div class="caption">
+                    <h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h4>
+                    <h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.pub_year }}</h6>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
+        </div>
+   <button class="btn-info btn" id="cf-btn"  onclick="cfalbums();" style="margin-left: 70%;margin-top: -1%;"> More</button>
+
+ <script>
+            var cfbtn=document.querySelector('#cf-btn');
+            var cftarget=document.querySelector('#hidden-cf');
+            function cfalbums () {
+
+                    cfbtn.setAttribute('class','hidden');
+                    cftarget.setAttribute('class','page-header');
+            }
+ </script>
+
+
+{% endif %}
+
+
+    </div>
+
+
+
+</div>
+{% endif %}
+
+
+
+
+{% if year %}
+<div class="container-fluid songs-container">
+<div class="container" style="margin-left: 1%;margin-top: ">
+    <div class="page-header" style="margin: ;  border-bottom: 2px solid #ee26c9;">
+        <h3><small style="font-family: 'Georgia';font-size:larger;color: #ee26c9">Albums by Released Year</small></h3>
+      </div>
+
+       <div class="panel-group" id="accordion-genre"  role="tablist" aria-multiselectable="true">
+
+         {% for item in year  %}
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading{{item.name}}" style="text-align: ">
+              <h1 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion-genre" href="#collapse{{item.name}}" aria-expanded="true" aria-controls="collapse">
+                  {{item.name}}
+                </a>
+<span class="badge" style="border-radius: 4px; float: right;   font-size: 14px;background-color:##04040475"> {{ item.count }}</span>
+              </h1>
+            </div>
+            <div id="collapse{{item.name}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{item.name}}">
+              <div class="panel-body">
+
+               {% for album in item.albums %}
+            <div class="col-sm-4 col-lg-2" onmouseover="style=''">
+            <div class="thumbnail" >
+                <a href="{%  url 'music:album_detail' album.id %}" data-toggle="tooltip" data-placement="top" title="{{   album.album_title   }}" data-original-title=""   style="text-align: center;text-decoration: none">
+                    <img   src="../{{ album.album_logo }}" style=""  class="">
+                <div class="caption">
+                    <h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h4>
+                    <h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.pub_year }}</h6>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
+              </div>
+                 {% for album in item.more_albums %}
+            <div class="col-sm-4 col-lg-2" onmouseover="style=''">
+            <div class="thumbnail" >
+                <a href="{%  url 'music:album_detail' album.id %}" data-toggle="tooltip" data-placement="top" title="{{   album.album_title   }}" data-original-title=""   style="text-align: center;text-decoration: none">
+                    <img   src="../{{ album.album_logo }}" style=""  class="">
+                <div class="caption">
+                    <h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h4>
+                    <h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.pub_year }}</h6>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
+             {% for album in item.much_more_albums %}
+            <div class="col-sm-4 col-lg-2" onmouseover="style=''">
+            <div class="thumbnail" >
+                <a href="{%  url 'music:album_detail' album.id %}" data-toggle="tooltip" data-placement="top" title="{{   album.album_title   }}" data-original-title=""   style="text-align: center;text-decoration: none">
+                    <img   src="../{{ album.album_logo }}" style=""  class="">
+                <div class="caption">
+                    <h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h4>
+                    <h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.pub_year }}</h6>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
+            </div>
+
+
+
+          </div>
+          {% endfor %}
+       </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

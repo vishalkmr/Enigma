@@ -1,0 +1,69 @@
+{% extends 'music/base_unregister.html' %}
+
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="panel panel-default">
+             <div class="panel-heading" style="text-align: center;margin-left:%;margin-right:%;" role="alert">
+                    <h3> <strong>Create Account</strong> </h3>
+                    </div>
+                <div class="panel-body">
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'music/form_template.html' %}
+                        <div class="form-group">
+                            <div class="" style="margin-left: 40%">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer" style="text-align: center;%">
+                    Already have an account? <a href="{% url 'music:login_user' %}">Click here</a> to log in.
+                </div>
+            </div>
+        </div>
+         <div class="col-sm-12 col-md-5">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                  <h3 style="text-align: center">Why Account is important?</h3>
+                <p> Enigma is an music app that allows you to listen and download music . </p>
+                <p> In order to provide <strong style="color: #256ed2">Personalized  Recommendations</strong> we need user specific details .</p>
+                <p>Means by <strong style="color: #32d243"> Creating an Account</strong> it is easy for us to recommend music for you   Based on your .....</p>
+                <p>
+
+                    <ul>
+                    <li>Listen History</li>
+                    <li>Location</li>
+                    <li>Age</li>
+                    <li>Gender</li>
+                    <li>And may more things </li>
+
+
+                </ul>
+
+                </p>
+
+            </div>
+
+              <div id="" class=" panel-footer" style="color: #0086ff;text-align: center"  >
+                Still don't want to create an account ! Login as <strong ><a href="{% url 'music:login_test_user' %}" style="color: #d2313c" >Testuser</a></strong>
+                 </div>
+
+
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+
+{% endblock %}
+

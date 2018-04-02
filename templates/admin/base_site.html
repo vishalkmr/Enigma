@@ -1,0 +1,12 @@
+{% extends "admin/base.html" %}
+
+    {% load staticfiles %}
+{% block title %}Enigma{% endblock %}
+{#{% block extrastyle %} <link rel="icon" href="{% static 'admin.png' %}" type="image/x-icon" /> {% endblock %}#}
+
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}"><a class="navbar-brand" href="/"> Enigma</a>  - Adminstartion</a></h1>
+
+{% endblock %}
+{% block nav-global %}{% endblock %}

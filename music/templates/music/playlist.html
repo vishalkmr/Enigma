@@ -1,0 +1,321 @@
+{% extends 'music/base.html' %}
+
+{% block style %}
+
+ <script src="../static/pace/js/pace.js"></script>
+  <link href="../static/pace/css/themes/yellow/pace-theme-loading-bar.css" rel="stylesheet" />
+
+
+{% endblock %}
+
+
+{% block body %}
+
+
+<div   class="container-fluid albums-container">
+
+    <div class="row" >
+
+
+     <!-- Left Album Info -->
+
+
+                <div class="well-lg" style="background-image:url('../static/img/p.png');margin-top: -55px;text-align: center";     >
+
+
+
+
+<br><h1 >
+<br>         <div id="play_text" class=""style="text-align:center;font-family:'Arial Rounded MT Bold'; color: #23ff1c;text-decoration: blink"  >
+
+                 </div>
+
+   </h1>
+
+        </div>
+
+
+        <!-- Right Song Info -->
+        <div class="   ">
+
+            <div class="panel panel-default" style="">
+                <div class="">
+                 {% if not usersongs %}
+                     <div style="text-align: center">
+                  <h3 style="text-align: center ;font-family: Arial Rounded MT Bold;"> No song available .......</h3><br>
+                      <div class="alert alert-success fade in">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                          To <strong> Add Songs </strong> to playlist click on &nbsp;<a><span class="glyphicon glyphicon-plus "></span></a>&nbsp;icon.
+                      </div>
+
+                      <div class="alert alert-danger fade in">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                          To <strong> Remove Songs </strong> from the playlist click on &nbsp;<a><span class="glyphicon glyphicon-minus "></span></a>&nbsp; icon.
+                      </div>
+                     </div>
+                 {% else %}
+                    <table class="table table-responsive table-hover" style="text-align: center;margin-left: 0px;margin-right: ">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">Album</th>
+                            <th style="text-align: center">Song Title</th>
+                            <th style="text-align: center">Artist</th>
+
+                            <th style="text-align: center">Actions</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                     <script>
+                                var flag=0; var current=0;var latest=0; var s=''; var p=''; var name='';
+                                 var t=document.querySelector('#play_text');
+                                    var btn=document.querySelector('#play_btn');
+                            </script>
+                        {% for u in usersongs %}
+                            <tr>
+                                <td>
+                                    <a href="../album/{{  u.song.album.id }}" style="text-decoration: none">
+                                    <button type="" style="background-color: transparent" class="btn bk-bs-btn-sm" data-toggle="tooltip" data-placement="" title="" data-original-title="{{   u.song.album.album_title   }}">
+                                        <img src="../{{ u.song.album.album_logo.url }}" class="" style="height:70px;width: 80px;">
+                                     </button>
+                                    </a>
+                                </td>
+
+
+
+
+                                <td>{{ u.song.song_title }}</td>
+
+
+
+                 <td  data-toggle="modal"  data-target="#a{{ u.song.id  }}"  > <a href="#" style="text-decoration:none ; ">{{ u.song.artist }}</a></td>
+
+<div class="modal fade bs-example-modal-lg"  id="a{{ u.song.id  }}" role="dialog" tabindex="-1" aria-labelledby="myLargeModalLabel" style="display: none;">
+
+ <div class="modal-dialog modal-lg" role="document">
+
+ <div class="modal-content" style="color: #005fff;border: transparent;background-color: transparent;text-align: center;font-size:300%;    -webkit-box-shadow: 0 0 0 rgba(0,0,0,0);
+    box-shadow: 0 0 0 rgba(0,0,0,0);  font-family:'AR BERKLEY' ;">
+ 		{{ u.song.artist }}
+
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="opacity:1;text-shadow: 0 0 0 transparent;"><span aria-hidden="true" style="color: red;margin-top: 1%;
+    font-size:250%;">×</span></button>
+
+
+ 	<div class="modal-body" style="padding:1px">
+{% for item in artist %}
+
+
+    {% if item.name == u.song.artist %}
+      {% for  song in item.songs %}
+<div class="col-sm-4 col-lg-2" style="margin-top:1%;""  >
+<div class="thumbnail" >
+<a href="{%  url 'music:song_detail' song.id %}" style="text-align: center;text-decoration: none; "   data-toggle="tooltip" data-placement="top" title="{{   song.song_title   }}" data-original-title="" >
+<img   src="../{{ song.album.album_logo.url }}" style=""  class="img-responsive">
+<div class="caption">
+<h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.song_title }}</h4>
+<h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.artist }}</h6>
+</div>
+</a>
+</div>
+
+</div>
+
+{% endfor %}
+
+    <div style="margin-top: 33%">
+    {% for  song in item.more_songs %}
+<div class="col-sm-4 col-lg-2" style="margin-top:1%;""  >
+<div class="thumbnail" >
+<a href="{%  url 'music:song_detail' song.id %}" style="text-align: center;text-decoration: none; "   data-toggle="tooltip" data-placement="top" title="{{   song.song_title   }}" data-original-title="" >
+<img   src="../{{ song.album.album_logo.url }}" style=""  class="img-responsive">
+<div class="caption">
+<h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.song_title }}</h4>
+<h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.artist }}</h6>
+</div>
+</a>
+</div>
+
+</div>
+
+{% endfor %}
+</div>
+     <div style="margin-top: 63%">
+    {% for  song in item.much_more_songs %}
+<div class="col-sm-4 col-lg-2" style="margin-top:1%;""  >
+<div class="thumbnail" >
+<a href="{%  url 'music:song_detail' song.id %}" style="text-align: center;text-decoration: none; "   data-toggle="tooltip" data-placement="top" title="{{   song.song_title   }}" data-original-title="" >
+<img   src="../{{ song.album.album_logo.url }}" style=""  class="img-responsive">
+<div class="caption">
+<h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.song_title }}</h4>
+<h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.artist }}</h6>
+</div>
+</a>
+</div>
+
+</div>
+
+{% endfor %}
+    </div>
+
+
+    {% endif %}
+
+    {% endfor %}
+
+
+ </div></div> </div>
+
+
+
+
+                                <td>
+                                <a class="btn btn-success btn-sm btn-listen_count " href="/listen_count_add/{{u.song.id }}" id="play_btn"  style="background-color: #2ECC40;border: transparent" onclick="playPause{{ u.song.id }}();" role="button" data-toggle="tooltip" data-placement="bottom"  data-original-title="play">
+                                      <span class="glyphicon glyphicon-play "></span></a>
+                                  <video id="video{{ u.song.id }}" width="0" height="0" >
+                                    <source src='../{{ u.song.audio_file.url }}' type="video/mp4">
+                                    Your browser does not support HTML5 Audio/Video.
+                                  </video>
+                                <script>
+                                var myVideo{{ u.song.id }} = document.getElementById("video{{ u.song.id }}");
+                                     function playPause{{ u.song.id }}() {
+                                        if (myVideo{{ u.song.id }}.paused) {
+
+                                            latest={{ u.song.id }};
+                                            if (current){
+                                                 s='myVideo'+current;
+                                                p='myVideo'+latest;
+
+                                                {% for i in  usersongs %}
+                                                   myVideo{{ i.song.id }}.pause();
+
+                                                    {% endfor %}
+                                                ;
+                                            };
+                                             {% for i in  usersongs %}
+                                                   myVideo{{ i.song.id }}.pause();
+                                                 {% if i.song.id == u.song.id%}
+                                                     name='{{i.song.song_title  }}';
+                                                 {% endif %}
+                                             {% endfor %}
+                                            myVideo{{ u.song.id }}.play();
+                                            current={{ u.song.id }};
+                                             t.innerHTML='<marquee behaviour="alternate"  > Now Playing: <strong>'+name+'</strong></p>';
+                                        }
+                                        else{
+                                         myVideo{{ u.song.id }}.pause();
+                                          t.innerHTML='';
+                                        }
+                                    }
+                                </script>
+
+
+
+                                    <a href="/playlist_add/{{ u.song.id }}P" class="btn" role="button" data-toggle="tooltip" data-placement="bottom"  data-original-title="{% if not u.is_added_to_playlist   %}Add to Playlist{% else %}Remove {% endif %}">
+                                          {% if  u.is_added_to_playlist   %}
+                                             <span class="glyphicon glyphicon-minus "></span>
+                                                {% else %}
+                                               <span class="glyphicon glyphicon-plus "></span>
+                                          {% endif %}
+                                      </a>
+
+
+
+
+                                    <a href="/favorite_add/{{u.song.id }}" class="btn  btn-sm btn-favorite" role="button" data-toggle="tooltip" data-placement="bottom"  data-original-title="Favorite" >
+                                   <span class="glyphicon glyphicon-star {% if u.is_favorite %}active{% endif %}"></span>
+                                      </a>
+
+                                      <a href="../{{ u.song.audio_file.url }}" class="btn  btn-sm " role="button" data-toggle="tooltip" data-placement="bottom"  data-original-title="Download" >
+                                   <span class="glyphicon glyphicon-download-alt " style="font-size: larger;color: #005fff"></span>
+                                      </a>
+
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                          {% endif %}
+
+
+
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+            <div  style="text-align: center"  class="panel-footer ">
+    </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#                    <table class="table table-responsive " style="text-align: center">#}
+{#                        <tr>#}
+{##}
+{#                            <th style="text-align: center">Caption</th>#}
+{#                            <th style="text-align: center">Title</th>#}
+{#                            <th style="text-align: center">Album</th>#}
+{#                            <th style="text-align: center">Artist</th>#}
+{#                            <th style="text-align: center">Genre</th>#}
+{#                            <th style="text-align: center">Year</th>#}
+{##}
+{#                            <th style="text-align: center">Actions</th>#}
+{##}
+{#                        </tr>#}
+{#                        </thead>#}
+{#                        <tbody style="font-size: larger">#}
+{##}
+{#                            <tr>#}
+{#                                <td>   <a href="{% url 'music:album_detail' song.album.id %}">#}
+{#                            <img src="../{{ song.album.album_logo.url }}" style="height: 30%;width: 30%">#}
+{#                            </a>        </td>#}
+{#                                <td>{{ song.song_title }}</td>#}
+{#                                <td>{{ song.album.album_title }}</td>#}
+{##}
+{#                                <td>{{ song.artist }}</td>#}
+{#                                <td>{{ song.genre }}</td>#}
+{#                                <td>{{ song.album.pub_year }}</td>#}
+{#                                <td>#}
+{##}
+{##}
+{#                                      <a target="_blank" href="../{{ song.audio_file.url }}">#}
+{#                                            <button type="button" class="btn btn-success btn-xs">#}
+{#                                                <span class="glyphicon glyphicon-play"></span>&nbsp; Play#}
+{#                                            </button>#}
+{#                                        </a>#}
+{#                                    <a href="" class="btn  "><span class="glyphicon glyphicon-plus  "></span></a>#}
+{##}
+{##}
+{#                                    <a href="" class="btn " role="button">#}
+{#                                    <span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span>#}
+{#                                     </a>#}
+{##}
+{#                                </td>#}
+{##}
+{#                            </tr>#}
+{##}
+{#                        </tbody>#}
+{#                    </table>#}
+
+    </div>
+
+
+</div>
+
+{% endblock %}

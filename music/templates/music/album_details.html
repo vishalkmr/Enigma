@@ -1,0 +1,481 @@
+{% extends 'music/base.html' %}
+
+{% block style %}
+  <script src="../static/pace/js/pace.js"></script>
+
+  <link href="../static/pace/css/themes/silver/pace-theme-loading-bar.css" rel="stylesheet" />
+
+{% endblock %}
+
+
+{% block body %}
+
+
+<div class="container-fluid albums-container">
+
+    <div class="row">
+
+        <!-- Left Album Info -->
+        <div class="col-sm-4 col-md-3" style="text-align: center;align-content: center;">
+            <div class="alert alert-info  fade in" style="">
+
+                            <img src="../{{ album.album_logo.url }}" class="">
+                     <h3 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:28px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h3>
+                    <h4 style="color: Black;font-family:Arial Rounded MT Bold" >{{ album.pub_year }}</h4>
+
+
+            </div>
+        </div>
+
+
+        <!-- Right Song Info -->
+        <div class="col-sm-8 col-md-9">
+
+            <div class="panel panel-default" style="">
+             <div  style="text-align: center"  class="panel-heading">
+                 <h3> {{ album.album_title }} Album Songs</h3>
+                 <div id="play_text" class="text-primary" style="color: #005fff;font-size: large;"  >
+                 </div>
+                </div>
+
+                <div class="panel-body">
+
+
+
+                    <table class="table  table-hover" style="text-align: center">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center">Title</th>
+                            <th style="text-align: center">Artist</th>
+                            <th style="text-align: center">Genre</th>
+                            <th style="text-align: center">Actions</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <script>
+                                var flag=0; var current=0;var latest=0; var s=''; var p=''; var name='';
+                                 var t=document.querySelector('#play_text');
+                                    var btn=document.querySelector('#play_btn');
+                            </script>
+                        {% for u in usersongs %}
+                            <tr>
+                                <td>{{ u.song.song_title }}</td>
+
+<td  data-toggle="modal"  data-target="#a{{ u.song.id  }}"  > <a href="#" style="text-decoration:none ; ">{{ u.song.artist }}</a></td>
+
+<div class="modal fade bs-example-modal-lg"  id="a{{ u.song.id  }}" role="dialog" tabindex="-1" aria-labelledby="myLargeModalLabel" style="display: none;">
+
+ <div class="modal-dialog modal-lg" role="document">
+
+ <div class="modal-content" style="color: #005fff;border: transparent;background-color: transparent;text-align: center;font-size:300%;    -webkit-box-shadow: 0 0 0 rgba(0,0,0,0);
+    box-shadow: 0 0 0 rgba(0,0,0,0);  font-family:'AR BERKLEY' ;">
+ 		{{ u.song.artist }}
+
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="opacity:1;text-shadow: 0 0 0 transparent;"><span aria-hidden="true" style="color: red;margin-top: 1%;
+    font-size: 250%;">×</span></button>
+
+
+ 	<div class="modal-body" style="padding:1px">
+{% for item in artist %}
+
+
+    {% if item.name == u.song.artist %}
+      {% for  song in item.songs %}
+<div class="col-sm-4 col-lg-2" style="margin-top:1%;""  >
+<div class="thumbnail" >
+<a href="{%  url 'music:song_detail' song.id %}" style="text-align: center;text-decoration: none; "   data-toggle="tooltip" data-placement="top" title="{{   song.song_title   }}" data-original-title="" >
+<img   src="../{{ song.album.album_logo.url }}" style=""  class="img-responsive">
+<div class="caption">
+<h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.song_title }}</h4>
+<h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.artist }}</h6>
+</div>
+</a>
+</div>
+
+</div>
+
+{% endfor %}
+
+    <div style="margin-top: 33%">
+    {% for  song in item.more_songs %}
+<div class="col-sm-4 col-lg-2" style="margin-top:1%;""  >
+<div class="thumbnail" >
+<a href="{%  url 'music:song_detail' song.id %}" style="text-align: center;text-decoration: none; "   data-toggle="tooltip" data-placement="top" title="{{   song.song_title   }}" data-original-title="" >
+<img   src="../{{ song.album.album_logo.url }}" style=""  class="img-responsive">
+<div class="caption">
+<h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.song_title }}</h4>
+<h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.artist }}</h6>
+</div>
+</a>
+</div>
+
+</div>
+
+{% endfor %}
+</div>
+     <div style="margin-top: 63%">
+    {% for  song in item.much_more_songs %}
+<div class="col-sm-4 col-lg-2" style="margin-top:1%;""  >
+<div class="thumbnail" >
+<a href="{%  url 'music:song_detail' song.id %}" style="text-align: center;text-decoration: none; "   data-toggle="tooltip" data-placement="top" title="{{   song.song_title   }}" data-original-title="" >
+<img   src="../{{ song.album.album_logo.url }}" style=""  class="img-responsive">
+<div class="caption">
+<h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.song_title }}</h4>
+<h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.artist }}</h6>
+</div>
+</a>
+</div>
+
+</div>
+
+{% endfor %}
+    </div>
+
+
+    {% endif %}
+
+    {% endfor %}
+
+
+ </div></div> </div>
+
+
+
+
+<td  data-toggle="modal"  data-target="#g{{ u.song.id  }}"  > <a href="#" style="text-decoration:none ; ">{{ u.song.genre }}</a></td>
+
+<div class="modal fade bs-example-modal-lg"  id="g{{ u.song.id  }}" role="dialog" tabindex="-1" aria-labelledby="myLargeModalLabel" style="display: none;">
+
+ <div class="modal-dialog modal-lg" role="document">
+
+ <div class="modal-content" style="color: #005fff;border: transparent;background-color: transparent;text-align: center;font-size:300%;    -webkit-box-shadow: 0 0 0 rgba(0,0,0,0);
+    box-shadow: 0 0 0 rgba(0,0,0,0);  font-family:'AR BERKLEY' ;">
+ 		{{ u.song.genre }}
+
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="opacity:1;text-shadow: 0 0 0 transparent;"><span aria-hidden="true" style="color: red;margin-top: 1%;
+    font-size:250%;">×</span></button>
+
+
+ 	<div class="modal-body" style="padding:1px">
+{% for item in genre %}
+
+
+    {% if item.name == u.song.genre %}
+      {% for  song in item.songs %}
+<div class="col-sm-4 col-lg-2" style="margin-top:1%;""  >
+<div class="thumbnail" >
+<a href="{%  url 'music:song_detail' song.id %}" style="text-align: center;text-decoration: none; "   data-toggle="tooltip" data-placement="top" title="{{   song.song_title   }}" data-original-title="" >
+<img   src="../{{ song.album.album_logo.url }}" style=""  class="img-responsive">
+<div class="caption">
+<h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.song_title }}</h4>
+<h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.artist }}</h6>
+</div>
+</a>
+</div>
+
+</div>
+
+{% endfor %}
+
+        <div style="margin-top: 33%">
+            {% for  song in item.more_songs %}
+<div class="col-sm-4 col-lg-2" style="margin-top:1%;""  >
+<div class="thumbnail" >
+<a href="{%  url 'music:song_detail' song.id %}" style="text-align: center;text-decoration: none; "   data-toggle="tooltip" data-placement="top" title="{{   song.song_title   }}" data-original-title="" >
+<img   src="../{{ song.album.album_logo.url }}" style=""  class="img-responsive">
+<div class="caption">
+<h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.song_title }}</h4>
+<h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.artist }}</h6>
+</div>
+</a>
+</div>
+
+</div>
+
+{% endfor %}
+        </div>
+             <div style="margin-top: 63%">
+            {% for  song in item.much_more_songs %}
+<div class="col-sm-4 col-lg-2" style="margin-top:1%;""  >
+<div class="thumbnail" >
+<a href="{%  url 'music:song_detail' song.id %}" style="text-align: center;text-decoration: none; "   data-toggle="tooltip" data-placement="top" title="{{   song.song_title   }}" data-original-title="" >
+<img   src="../{{ song.album.album_logo.url }}" style=""  class="img-responsive">
+<div class="caption">
+<h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.song_title }}</h4>
+<h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ song.artist }}</h6>
+</div>
+</a>
+</div>
+
+</div>
+
+{% endfor %}
+            </div>
+
+
+    {% endif %}
+
+
+    {% endfor %}
+
+
+ </div></div> </div>
+
+
+
+
+                                <td>
+
+                              <a class="btn btn-success btn-sm  btn-listen_count " href="/listen_count_add/{{u.song.id }}" id="play_btn"  style="background-color: #2ECC40;border: transparent" onclick="playPause{{ u.song.id }}();" role="button" data-toggle="tooltip" data-placement="bottom"  data-original-title="play">
+                                      <span class="glyphicon glyphicon-play "></span></a>
+                                  <video id="video{{ u.song.id }}" width="0" height="0" >
+                                    <source src='../{{ u.song.audio_file.url }}' type="video/mp4">
+                                    Your browser does not support HTML5 Audio/Video.
+                                  </video>
+                                <script>
+                                var myVideo{{ u.song.id }} = document.getElementById("video{{ u.song.id }}");
+                                     function playPause{{ u.song.id }}() {
+                                        if (myVideo{{ u.song.id }}.paused) {
+
+                                            latest={{ u.song.id }};
+                                            if (current){
+                                                 s='myVideo'+current;
+                                                p='myVideo'+latest;
+
+                                                {% for i in  usersongs %}
+                                                   myVideo{{ i.song.id }}.pause();
+
+                                                    {% endfor %}
+                                                ;
+                                            };
+                                             {% for i in  usersongs %}
+                                                   myVideo{{ i.song.id }}.pause();
+                                                 {% if i.song.id == u.song.id%}
+                                                     name='{{i.song.song_title  }}';
+                                                 {% endif %}
+                                             {% endfor %}
+                                            myVideo{{ u.song.id }}.play();
+                                            current={{ u.song.id }};
+                                             t.innerHTML='<marquee behaviour="alternate"  > Now Playing: <strong>'+name+'</strong></p>';
+                                        }
+                                        else{
+                                         myVideo{{ u.song.id }}.pause();
+                                          t.innerHTML='';
+                                        }
+                                    }
+                                </script>                                      &nbsp;
+                                    <a href="/playlist_add/{{ u.song.id }}A" class="btn" role="button" data-toggle="tooltip" data-placement="bottom"  data-original-title="{% if not u.is_added_to_playlist   %}Add to Playlist{% else %}Remove {% endif %}">
+                                          {% if  u.is_added_to_playlist   %}
+                                             <span class="glyphicon glyphicon-minus "></span>
+                                                {% else %}
+                                               <span class="glyphicon glyphicon-plus "></span>
+                                          {% endif %}
+                                      </a>                             &nbsp;
+                                   <a href="/favorite_add/{{u.song.id }}" class="btn  btn-sm btn-favorite" role="button" data-toggle="tooltip" data-placement="bottom"  data-original-title="Favorite" >
+                                   <span class="glyphicon glyphicon-star {% if u.is_favorite %}active{% endif %}"></span>
+                                      </a>
+
+                          <a href="../{{ u.song.audio_file.url }}" class="btn  btn-sm " role="button" data-toggle="tooltip" data-placement="bottom"  data-original-title="Download" >
+                                   <span class="glyphicon glyphicon-download-alt " style="font-size: larger;color: #005fff"></span>
+                                      </a>
+
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+
+
+
+
+
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+<div  style="text-align: center"  class="panel-footer">
+    </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+</div>
+
+{% if  cf_based_similar_albums %}
+<div class="container-fluid songs-container">
+
+    <div class="alert  ">
+    <div class="container" style="margin-left: -1%;margin-top: -3%;">
+          <div class="page-header" style="margin: ;  border-bottom: 2px solid #238bef;">
+        <h3><small style="font-family: 'Georgia';font-size:larger;color: #238bef">People Also Like </small></h3>
+      </div>
+
+        {% for album in cf_based_similar_albums   %}
+            <div class="col-sm-4 col-lg-2" onmouseover="style=''">
+            <div class="thumbnail" >
+                <a href="{%  url 'music:album_detail' album.id %}" data-toggle="tooltip" data-placement="top" title="{{   album.album_title   }}" data-original-title=""   style="text-align: center;text-decoration: none">
+                    <img   src="../{{ album.album_logo }}" style=""  class="">
+                <div class="caption">
+                    <h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h4>
+                    <h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.pub_year }}</h6>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+{% if more_cf_based_similar_albums %}
+ <div class="hidden" id="hidden-more_cf_based_similar_albums" style="">
+               {% for album in more_cf_based_similar_albums   %}
+            <div class="col-sm-4 col-lg-2" onmouseover="style=''">
+            <div class="thumbnail" >
+                <a href="{%  url 'music:album_detail' album.id %}" data-toggle="tooltip" data-placement="top" title="{{   album.album_title   }}" data-original-title=""   style="text-align: center;text-decoration: none">
+                    <img   src="../{{ album.album_logo }}" style=""  class="">
+                <div class="caption">
+                    <h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h4>
+                    <h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.pub_year }}</h6>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
+        </div>
+   <button class="btn-info btn" id="more_cf_based_similar_albums-btn"  onclick="more_cf_based_similar_albums();" style="margin-left: 70%;margin-top: -1%;"> More</button>
+
+ <script>
+            var more_cf_based_similar_albums_btn=document.querySelector('#more_cf_based_similar_albums-btn');
+            var more_cf_based_similar_albums_target=document.querySelector('#hidden-more_cf_based_similar_albums');
+            function more_cf_based_similar_albums () {
+
+                    more_cf_based_similar_albums_btn.setAttribute('class','hidden');
+                    more_cf_based_similar_albums_target.setAttribute('class','page-header');
+            }
+ </script>
+
+
+{% endif %}
+
+
+    </div>
+
+
+
+</div>
+{% endif %}
+
+
+{% if  cl_based_similar_albums %}
+<div class="container-fluid songs-container">
+
+    <div class="alert  ">
+    <div class="container" style="margin-left: -1%;margin-top: -3%;">
+          <div class="page-header" style="margin: ;  border-bottom: 2px solid #ee9d0b;">
+        <h3><small style="font-family: 'Georgia';font-size:larger;color: #ee9d0b">Similar Albums</small></h3>
+      </div>
+
+        {% for album in cl_based_similar_albums   %}
+            <div class="col-sm-4 col-lg-2" onmouseover="style=''">
+            <div class="thumbnail" >
+                <a href="{%  url 'music:album_detail' album.id %}" data-toggle="tooltip" data-placement="top" title="{{   album.album_title   }}" data-original-title=""   style="text-align: center;text-decoration: none">
+                    <img   src="../{{ album.album_logo }}" style=""  class="">
+                <div class="caption">
+                    <h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h4>
+                    <h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.pub_year }}</h6>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+{% if more_cl_based_similar_albums %}
+ <div class="hidden" id="hidden-more_cl_based_similar_albums" style="">
+               {% for album in more_cl_based_similar_albums   %}
+            <div class="col-sm-4 col-lg-2" onmouseover="style=''">
+            <div class="thumbnail" >
+                <a href="{%  url 'music:album_detail' album.id %}" data-toggle="tooltip" data-placement="top" title="{{   album.album_title   }}" data-original-title=""   style="text-align: center;text-decoration: none">
+                    <img   src="../{{ album.album_logo }}" style=""  class="">
+                <div class="caption">
+                    <h4 style="color:Black;text-blink:10;font-family: 'Georgia';  " onmouseout="style='color:Black;font-family: \'Georgia\''"  onmouseover="style='font-size:20px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.album_title }}</h4>
+                    <h6 style="color: Black;font-family: 'Georgia'" onmouseout="style='color:Black;font-family: \'Georgia\''" onmouseover="style='font-size:15px;color:Blue;font-family: \'Arial Rounded MT Bold\''">{{ album.pub_year }}</h6>
+                </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+
+        </div>
+   <button class="btn-warning btn" id="more_cl_based_similar_albums-btn"  onclick="more_cl_based_similar_albums();" style="margin-left: 70%;margin-top: -1%;"> More</button>
+
+ <script>
+            var more_cl_based_similar_albums_btn=document.querySelector('#more_cl_based_similar_albums-btn');
+            var more_cl_based_similar_albums_target=document.querySelector('#hidden-more_cl_based_similar_albums');
+            function more_cl_based_similar_albums () {
+
+                    more_cl_based_similar_albums_btn.setAttribute('class','hidden');
+                    more_cl_based_similar_albums_target.setAttribute('class','page-header');
+            }
+ </script>
+
+
+{% endif %}
+
+
+    </div>
+
+
+
+</div>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+{% block script %}
+<script>
+
+
+
+
+
+
+
+
+
+
+</script>
+{% endblock %}

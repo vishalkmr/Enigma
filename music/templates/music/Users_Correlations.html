@@ -1,0 +1,42 @@
+{% extends 'music/base.html' %}
+{% block body %}
+
+<div class="container-fluid songs-container">
+
+    <div class="alert  " >
+    <div class="container" style="margin-left: -1%;margin-top: -3%;">
+      <div class="page-header" style="  border-bottom: 2px solid #2139f3;">
+        <h3><small style="font-family: 'Georgia';font-size:larger;color:#2139f3"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>  User Correlations </small> </h3>
+      </div>
+
+
+{% for user in users%}
+
+<button type="button" class="btn btn-primary btn-link" data-toggle="modal"  data-target="#{{ user.username }}" style="font-size:30px;text-decoration: none" onmouseout="style='font-size:30px;text-decoration: none'" onmouseover="style='font-size:35px  ;text-decoration: none'">{{ user.username }} </button>
+
+<div class="modal fade bs-example-modal-lg"  id="{{ user.username }}" role="dialog" tabindex="-1" aria-labelledby="myLargeModalLabel" style="display: none;">
+
+ <div class="modal-dialog modal-lg" role="document">
+
+ <div class="modal-content" style="color:transparent;border: transparent;background-color: transparent;text-align: center;font-size:;    -webkit-box-shadow: 0 0 0 rgba(0,0,0,0);
+    box-shadow: 0 0 0 rgba(0,0,0,0);  font-family:'AR BERKLEY' ;">
+`
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="opacity:1;text-shadow: 0 0 0 transparent;"><span aria-hidden="true" style="color: red;margin-top: 1%;
+    font-size: 250%">×</span></button>
+
+
+  <div class="modal-body" style="margin-left:10%;padding:5px">
+<img   src="../static/analysis/users/{{ user.username}}.png" style=""  class="img-responsive">
+
+  </div>
+
+
+ </div></div> </div>
+{%endfor%}
+
+    </div>
+    </div>
+</div>
+
+
+{% endblock %}

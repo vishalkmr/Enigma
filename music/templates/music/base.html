@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- For mobile friendly styles -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+   <meta name="description" content="Enigma">
+   <meta name="author" content="vishal">
+
+    <title>Enigma</title>
+        <link rel="icon" href="{% static 'img/l.png' %}" type="image/x-icon" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" type="text/css" rel="stylesheet">
+
+    <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+	<link href="{% static 'css/fileinput.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/styles.css' %}" type="text/css" rel="stylesheet">
+    
+
+{% block style %}
+{% endblock %}
+
+
+
+</head>
+<body  style='background: white url("{% static 'img/background.png' %}")'>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <!-- Header -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="{% url 'music:index' %}"><span class="glyphicon glyphicon-headphones  " style="font-size:; color:;   " aria-hidden="true"></span> Enigma</a>
+        </div>
+
+        <!-- Items -->
+        <div class="collapse navbar-collapse" id="topNavBar">
+            <ul class="nav navbar-nav">
+                <li class=""><a href="{% url 'music:albums' %}"><span class="glyphicon glyphicon-cd" aria-hidden="true"></span>&nbsp; Albums</a></li>
+                <li class=""><a href="{% url 'music:songs' %}"><span class="glyphicon glyphicon-music" aria-hidden="true"></span>&nbsp; Songs</a></li>
+            </ul>
+
+
+
+
+
+{##}
+{#            <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'music:index' %}">#}
+{#         <div class="form-group">#}
+{#        {% csrf_token %}#}
+{#             <input type="text" id="search" name="search" class="form-control" placeholder=" Search  "  style="text-align: center;;#}
+{#                    border-radius: 6px;"    >#}
+{#         </div>#}
+{#            </form>#}
+
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{% url 'music:playlist' %}">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>&nbsp; Playlist
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'music:profile'   %}">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; Profile
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/admin">
+                        <span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp; Admin
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'music:logout_user' %}">
+                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+
+{% block body %}
+{% endblock %}
+
+<footer>
+<br>
+    <div class="container" style="text-align:center;font-size: large "  ><hr><br>
+    <p  class="copyright text-muted">Copyright<img  src="{% static 'img/l.png' %}" style="height:22px;width: 20px;margin-left:6px;">  Enigma 2018  <a  style="margin-left:10%;text-decoration: none"  href="#">Top</a>  </p>
+
+    </div>
+ </footer>
+
+
+<!-- Bootstrap core JavaScript -->
+<!-- Placed at the end of the document so the pages load faster -->
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script>window.jQuery || document.write('<script src="{% static 'js/jquery.min.js' %}"><\/script>')</script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+	<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+
+{% block script %}
+{% endblock %}
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+
+
+	<script src="{% static 'js/transition.js' %}"></script>
+	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
+
+		<script src="{% static 'js/main.js' %}"></script>
+		<script src="{% static 'js/button.js' %}"></script>
+		<script src="{% static 'js/tab.js' %}"></script>
+		<script src="{% static 'js/scrollspy.js' %}"></script>
+		<script src="{% static 'js/collapse.js' %}"></script>
+		<script src="{% static 'js/popover.js' %}"></script>
+		<script src="{% static 'js/tooltip.js' %}"></script>
+		<script src="{% static 'js/carousel.js' %}"></script>
+		<script src="{% static 'js/alert.js' %}"></script>
+		<script src="{% static 'js/affix.js' %}"></script>
+		<script src="{% static 'js/validator.js' %}"></script>
+
+		 <script src="{% static 'js/fileinput.js' %}" type="text/javascript"></script>
+
+
+<!--Tooltip Functioning -->
+	<script>
+		$(function () {
+		  $('[data-toggle="tooltip"]').tooltip()
+		})
+	</script>
+<!--Loadbutton Functioning -->
+	<script>
+	$(function () {
+	  $('.js-loading-button').on('click', function () {
+		var btn = $(this).button('loading')
+		setTimeout(function (){
+		  btn.button('reset')
+		}, 3000)
+	  })
+	})
+	</script>
+<!--Popover Functioning -->
+	<script>
+	$(function () {
+	  $('.js-popover').popover()
+	})
+	</script>
+<!-- Afixx -->
+	<script>
+	$(function () {
+	  $('.js-affixed-element-top').affix({
+		offset: {
+		  top: $('.js-page-header').outerHeight(true) - 10
+		, bottom: $('.js-footer').outerHeight(true) + 10
+		}
+	  })
+	  // todo(fat): sux you have to do this.
+	  .on('affix.bs.affix', function (e) {
+		$(e.target).width(e.target.offsetWidth)
+	  })
+
+	  $('.js-affixed-element-bottom').affix({
+		offset: {
+		  bottom: $('.js-footer').outerHeight(true) + 10
+		}
+	  })
+
+	  $('.js-grow-btn').on('click', function() {
+		$('.js-content').append('<p>Ipsum corrupti ipsam est temporibus.</p>')
+	  })
+	  $('.js-shrink-btn').on('click', function() {
+		$('.js-content p').last().remove()
+	  })
+	})
+	</script>
+
+
+
+
+</body>
+</html>

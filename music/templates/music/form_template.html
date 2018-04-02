@@ -1,0 +1,22 @@
+{#{% for field in form %}#}
+{#    <div class="form-group">#}
+{#        <div class="">#}
+{#            <span class="text-danger small">{{ field.errors }}</span>#}
+{#        </div>#}
+{##}
+{#        <div class=""style="margin-left: 30%"><label class="" for="song_title">{{ field.label_tag }}</label>&nbsp;&nbsp;{{ field }}</div>#}
+{#    </div>#}
+{#{% endfor %}#}
+
+
+{% for field in form %}
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <span class="text-danger small">{{ field.errors }}</span>
+        </div>
+        <div class=""style="margin-left: 30%">
+        <label class=" " >{{ field.label_tag }}</label>&nbsp;&nbsp;
+        {{ field }}
+        </div>
+    </div>
+{% endfor %}
