@@ -1,5 +1,15 @@
 {% extends 'music/base.html' %}
 
+{% block admin %}
+{% if user_status%}
+
+    <li>
+    <a href="/admin">
+    <span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp; Admin
+    </a>
+    </li>
+{% endif %}
+{% endblock %}
 
 
 {% block style %}

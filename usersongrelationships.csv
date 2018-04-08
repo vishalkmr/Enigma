@@ -109,7 +109,7 @@ user_id,song_id,is_favorite,is_added_to_playlist,listen_count
 44,43,False,False,0
 1,61,False,False,0
 6,61,False,False,0
-24,61,False,False,0
+24,61,True,True,1
 35,61,False,False,0
 39,61,False,False,0
 44,61,False,False,0
@@ -127,7 +127,7 @@ user_id,song_id,is_favorite,is_added_to_playlist,listen_count
 44,64,False,False,0
 1,65,False,False,0
 6,65,False,False,0
-24,65,False,False,0
+24,65,False,True,1
 35,65,False,False,0
 39,65,False,False,0
 44,65,False,False,0

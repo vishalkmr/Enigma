@@ -1,22 +1,4 @@
-// $(document).on('submit','#playlist_form',function(e){
-//                                             e.preventDefault();
-//                                             $ajax({
-//                                                  type:'POST',
-//                                                 url:'/playlist_add1/{{ u.song.id }}A',
-//                                                 data:{
-//                                                     is_is_added_to_playlist:$('#is_added_to_playlist').val(),
-//                                                     csrfmiddlewaretoken:$('input=[name=csrfmiddlewaretoken]').val(),
-//                                                 },
-//                                                 success:function () {
-//                                                      alert("done");
-//
-//                                                 }
-//
-//                                             });
-//
-//                                         });
-//
-//
+
 
 $(function () {
 	$('#search').keyup(function () {

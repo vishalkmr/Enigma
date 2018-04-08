@@ -1,24 +1,24 @@
 {% if searched_songs %}
 	{%for song in searched_songs %}
-		<li><a style="color: rgb(238,230,17);" role="alert" href="song/{{ song.id }}">{{ song.song_title}} - Song </a> </li>
+		<li><a style="color: rgb(238,230,17);" role="alert" href="../song/{{ song.id }}">{{ song.song_title}} - Song </a> </li>
 	{% endfor%}
     {%endif%}
 {% if searched_albums %}
 	{%for album in searched_albums %}
 
-		<li><a style="color: #23ff1c;"  role="alert" href="album/{{ album.id }}">{{ album.album_title}} - Album     </a> </li>
+		<li><a style="color: #23ff1c;"  role="alert" href="../album/{{ album.id }}">{{ album.album_title}} - Album     </a> </li>
 
 	{% endfor%}
 {%endif%}
 
 {% if searched_artists %}
 	{%for song in searched_artists %}
-		<li><a style="color: rgb(5,160,238);" role="alert" href="song/{{ song.id }}">{{ song.song_title}} - {{song.artist }} </a> </li>
+		<li><a style="color: rgb(5,160,238);" role="alert" href="../song/{{ song.id }}">{{ song.song_title}} - {{song.artist }} </a> </li>
 	{% endfor%}
 {%endif%}
 
 {% if searched_genres %}
 	{%for song in searched_genres %}
-		<li><a style="color: rgb(250,0,0);" role="alert" href="song/{{ song.id }}">{{ song.song_title}} - {{song.genre }} </a> </li>
+		<li><a style="color: rgb(250,0,0);" role="alert" href="../song/{{ song.id }}">{{ song.song_title}} - {{song.genre }} </a> </li>
 	{% endfor%}
 {%endif%}

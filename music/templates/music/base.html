@@ -56,14 +56,6 @@
 
 
 
-{##}
-{#            <form class="navbar-form navbar-left" role="search" method="get" action="{% url 'music:index' %}">#}
-{#         <div class="form-group">#}
-{#        {% csrf_token %}#}
-{#             <input type="text" id="search" name="search" class="form-control" placeholder=" Search  "  style="text-align: center;;#}
-{#                    border-radius: 6px;"    >#}
-{#         </div>#}
-{#            </form>#}
 
 
             <ul class="nav navbar-nav navbar-right">
@@ -78,11 +70,10 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="/admin">
-                        <span class="glyphicon glyphicon-king" aria-hidden="true"></span>&nbsp; Admin
-                    </a>
-                </li>
+
+                {% block admin %}
+                {% endblock %}
+
 
                 <li>
                     <a href="{% url 'music:logout_user' %}">

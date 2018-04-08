@@ -85,7 +85,7 @@ def index(request):
             return render(request, 'music/index.html',
                           {'searched_albums': searched_albums, 'searched_songs': searched_songs,
                            'searched_artists': searched_artists, 'searched_genres': searched_genres, 'status': status})
-        context = {'all_albums': all_albums, 'all_songs': all_songs, 'status': status}
+        context = {'all_albums': all_albums, 'all_songs': all_songs, 'status': status,'user_status':request.session['status']}
         # context.update(csrf(request))
         return render(request, 'music/index.html', context)
 
@@ -148,7 +148,7 @@ def albums(request):
 
 
 
-        context = {'all_albums': all_albums[:6], 'latest_albums':latest_albums[:6],'more_latest_albums':latest_albums[6:12],'popular_albums':popular_albums[:6],'more_popular_albums':popular_albums[6:12],'id':request.session['user_id'],'cf_albums':cf_albums[:6],'more_cf_albums':cf_albums[6:12],'year':year}
+        context = {'all_albums': all_albums[:6], 'latest_albums':latest_albums[:6],'more_latest_albums':latest_albums[6:12],'popular_albums':popular_albums[:6],'more_popular_albums':popular_albums[6:12],'id':request.session['user_id'],'cf_albums':cf_albums[:6],'more_cf_albums':cf_albums[6:12],'year':year,'user_status':request.session['status']}
         return render(request, 'music/albums.html', context)
 
 
@@ -236,7 +236,7 @@ def album_detail(request, album_id):
 
 
 
-        context = {'all_albums': all_albums, 'all_songs': all_songs, 'songs': songs, 'album': album,'usersongs':usersongs,'id':request.session['user_id'],'cf_based_similar_albums':cf_based_similar_albums[:6],'more_cf_based_similar_albums':cf_based_similar_albums[6:12],'cl_based_similar_albums':cl_based_similar_albums[:6],'more_cl_based_similar_albums':cl_based_similar_albums[6:12],'artist':artist,'genre':genre}
+        context = {'all_albums': all_albums, 'all_songs': all_songs, 'songs': songs, 'album': album,'usersongs':usersongs,'id':request.session['user_id'],'cf_based_similar_albums':cf_based_similar_albums[:6],'more_cf_based_similar_albums':cf_based_similar_albums[6:12],'cl_based_similar_albums':cl_based_similar_albums[:6],'more_cl_based_similar_albums':cl_based_similar_albums[6:12],'artist':artist,'genre':genre,'user_status':request.session['status']}
 
         return render(request, 'music/album_details.html', context)
 
@@ -318,7 +318,7 @@ def songs(request):
             c=c+1
 
 
-        context = {'all_songs': all_songs[:6],'id':request.session['user_id'],'popular_songs':popular_songs[:6],'latest_songs':latest_songs[:6],'more_latest_songs':latest_songs[6:12],'more_popular_songs':popular_songs[6:12],'cf_songs':cf_songs[:6],'more_cf_songs':cf_songs[6:12],'genre':genre,'artist':artist }
+        context = {'all_songs': all_songs[:6],'id':request.session['user_id'],'popular_songs':popular_songs[:6],'latest_songs':latest_songs[:6],'more_latest_songs':latest_songs[6:12],'more_popular_songs':popular_songs[6:12],'cf_songs':cf_songs[:6],'more_cf_songs':cf_songs[6:12],'genre':genre,'artist':artist ,'user_status':request.session['status']}
 
 
         return render(request, 'music/songs.html', context)
@@ -404,7 +404,7 @@ def song_detail(request, song_id):
         # for i in genre.songs:
         #     print(i)
 
-        context = {'all_albums': all_albums, 'all_songs': all_songs, 'usersong':usersong,'id':request.session['user_id'],'cf_based_similar_songs':cf_based_similar_songs[:6],'more_cf_based_similar_songs':cf_based_similar_songs[6:12],'cl_based_similar_songs':cl_based_similar_songs[:6],'more_cl_based_similar_songs':cl_based_similar_songs[6:12],'genre':genre,'artist':artist}
+        context = {'all_albums': all_albums, 'all_songs': all_songs, 'usersong':usersong,'id':request.session['user_id'],'cf_based_similar_songs':cf_based_similar_songs[:6],'more_cf_based_similar_songs':cf_based_similar_songs[6:12],'cl_based_similar_songs':cl_based_similar_songs[:6],'more_cl_based_similar_songs':cl_based_similar_songs[6:12],'genre':genre,'artist':artist,'user_status':request.session['status']}
         return render(request, 'music/song_details.html', context)
 
 
@@ -421,6 +421,7 @@ def login_user(request):
                 if user.is_active:
                     login(request, user)
                     u = User.objects.get(username=username)
+                    request.session['status']=u.is_superuser
                     request.session['username'] = u.username
                     request.session['first_name'] = u.first_name
                     request.session['last_name'] = u.last_name
@@ -428,7 +429,7 @@ def login_user(request):
                     request.session['password'] = u.password
                     request.session['user_id'] = u.id
 
-                    return render(request, 'music/index.html', {'success_message': 'Welcome ' + username + ' !'})
+                    return render(request, 'music/index.html', {'success_message': 'Welcome ' + username + ' !','user_status':request.session['status']})
                 else:
                     return render(request, 'music/login.html', {'error_message': 'Your account has been disabled'})
             else:
@@ -445,7 +446,7 @@ def login_test_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-
+                request.session['status']=False
                 request.session['username'] = u.username
                 request.session['first_name'] = u.first_name
                 request.session['last_name'] = u.last_name
@@ -453,7 +454,7 @@ def login_test_user(request):
                 request.session['password'] = u.password
                 request.session['user_id'] = u.id
 
-                return render(request, 'music/index.html', {'success_message': 'You are successfully Login as ' + u.username + ' !','warning_message':'Testuser is an shared account so you may not get best recomendations !','info_message':'For best recomendations we suggests you to create an account .'})
+                return render(request, 'music/index.html', {'success_message': 'You are successfully Login as ' + u.username + ' !','warning_message':'Testuser is an shared account so you may not get best recomendations !','info_message':'For best recomendations we suggests you to create an account .','user_status':request.session['status']})
             else:
                 return render(request, 'music/login.html', {'error_message': 'Your Testuser account has been disabled'})
         else:
@@ -526,7 +527,7 @@ def profile(request):
     if not request.user.is_authenticated:
         return redirect('music:index')
     else:
-        csv_generatore()        
+        csv_generatore()
         form = ProfileForm(request.POST or None)
         if form.is_valid():
             gender = form.cleaned_data['gender']
@@ -552,7 +553,7 @@ def profile(request):
                 "city": p.city,
                 "date": p.date_of_birth,
                 "status": status,
-
+               "user_status":request.session['status']
             }
             return render(request, 'music/profile.html', context)
 
@@ -572,7 +573,7 @@ def profile(request):
             "city": p.city,
             "date":p.date_of_birth,
             "status" :status,
-
+            "user_status": request.session['status']
         }
         return render(request, 'music/profile.html', context)
 
@@ -670,7 +671,7 @@ def playlist(request):
 
 
 
-        context = {'all_albums': all_albums, 'all_songs': all_songs,'usersongs':playlist_items,'id':request.session['user_id'],'artist':artist}
+        context = {'all_albums': all_albums, 'all_songs': all_songs,'usersongs':playlist_items,'id':request.session['user_id'],'artist':artist,'user_status':request.session['status']}
         return render(request, 'music/playlist.html', context)
 
 
@@ -690,6 +691,7 @@ def contact(request):
     if not request.user.is_authenticated:
         return render(request, 'music/index_unregister.html', context)
     else:
+        context["user_status"]  =request.session['status']
         return render(request, 'music/index.html', context)
 
 
@@ -713,7 +715,7 @@ def search(request):
        searched_genres=[]
        # print('empty')
    # print('search_text'+search_text)
-   context={'searched_albums':searched_albums,'searched_songs':searched_songs,'searched_artists':searched_artists,'searched_genres':searched_genres,}
+   context={'searched_albums':searched_albums,'searched_songs':searched_songs,'searched_artists':searched_artists,'searched_genres':searched_genres,'user_status':request.session['status']}
    return render(request, 'music/ajax_search.html', context)
 
 def popularity(request):
@@ -737,9 +739,8 @@ def album_clustering(request):
 
 def Users_Correlations(request):
     csv_generatore()
-    # import User_Correlations_Genratore
-    # import os 
-    # os.system('python User_Correlations_Genratore.py')
+    import os
+    os.system('python User_Correlations_Genratore.py')
     users = User.objects.all()
 
 
@@ -749,7 +750,8 @@ def Users_Correlations(request):
 
 def Songs_Correlations(request):
     csv_generatore()
-    # import Song_Correlations_Genratore
+    import os
+    os.system('python Song_Correlations_Genratore.py')
     songs = Song.objects.all()
 
     context = {'songs': songs, }
@@ -758,7 +760,8 @@ def Songs_Correlations(request):
 
 def Albums_Correlations(request):
     csv_generatore()
-    # import Album_Correlations_Genratore
+    import os
+    os.system('python Album_Correlations_Genratore.py')
     albums = Album.objects.all()
     context = {'albums': albums, }
     return render(request, 'music/Albums Correlations.html', context)
